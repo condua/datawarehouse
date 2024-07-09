@@ -12,7 +12,7 @@ const Login = () => {
 
     const navigate = useNavigate()
     const [isLog, setIsLog] = useState(() => {
-        const storedIsLog = localStorage.getItem('isLog').toString();
+        const storedIsLog = localStorage.getItem('isLog')?.toString();
         return storedIsLog ? storedIsLog : '';
       });
 
@@ -37,6 +37,7 @@ const Login = () => {
           navigate('/tracuu')
           window.location.reload();
         } catch (error) {
+          alert('Lỗi đăng nhập:' + error.message)
           console.error('Lỗi đăng nhập:', error.message);
         }
       };

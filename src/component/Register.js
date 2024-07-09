@@ -12,7 +12,7 @@ const Register = () => {
   const [displayName, setDisplayName] = useState('');
   const navigate = useNavigate();
   const [isLog, setIsLog] = useState(() => {
-    const storedIsLog = localStorage.getItem('isLog').toString();
+    const storedIsLog = localStorage.getItem('isLog')?.toString();
     return storedIsLog ? storedIsLog : '';
   });
 
@@ -54,7 +54,8 @@ const Register = () => {
       phone: 'none',
       birthday: 'none',
       gender: 'none',
-      address: 'none'
+      address: 'none',
+      avatar:'https://firebasestorage.googleapis.com/v0/b/data-warehouse-18412.appspot.com/o/images%2FLogo%20HCMUT.jpg?alt=media&token=09c0b0ae-5039-4614-a8e0-ac480c2f6376'
     });
 
     localStorage.setItem('aaa', JSON.stringify({ ...user, idDoc: uid }));
@@ -63,8 +64,8 @@ const Register = () => {
 
     navigate('/login');
     } catch (error) {
-    console.error('Lỗi đăng ký:', error.message);
-    alert('Lỗi đăng ký: ' + error.message);
+      console.error('Lỗi đăng ký:', error.message);
+      alert('Lỗi đăng ký: ' + error.message);
     }
   }
 

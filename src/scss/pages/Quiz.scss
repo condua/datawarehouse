@@ -1,0 +1,87 @@
+.Quiz{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    .container{
+        width: 80%;
+        height: 71vh;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+       .content{
+            width: 80%;
+            .answer{
+                display: grid;
+                grid-template-columns: 50% 50%;
+                .answer-detail{
+                    border: 1px solid;
+                    width: 80%;
+                    height: 80px;
+                    padding: 10px 30px 20px 30px;
+                    margin:20px 30px 20px 0px;
+                    display:flex;
+                    align-items:center;
+                }
+            }
+        }
+        .questions-id{
+            display: grid;
+            // margin-left: 10px;
+            grid-template-columns: auto auto;
+            margin-top: 30px;
+            cursor: pointer;
+            .questions-id-detail{
+                width: 80px;
+                margin: 5px;
+
+            }
+        }
+    }
+}
+@media only  screen and (max-width: 1200px)
+{
+    .Quiz{
+        .container{
+            display: flex;
+            flex-direction: column;
+            justify-content: none;
+            align-items: none;
+            height: auto;
+            width: 100%;
+            .content{
+                font-size: calc(0.90375rem + 0.045vw);
+                .answer{
+                    display: grid;
+                    grid-template-columns: auto;
+                    .answer-detail{
+                        display: none;
+                        border: 1px solid;
+                        width: 100%;
+                        height: 50px;
+                        padding: 20px 10px 20px 10px;
+                        margin: 10px 0px 20px 0px;
+                        // overflow-y:scroll;
+                        display:flex;
+                        align-items:center;
+                    }
+                }
+            }
+            .questions-id{
+                font-size: 15px;
+                display: grid;
+                grid-template-columns: auto auto auto auto ;
+                // margin-left: 10px;
+                margin-top: 0px;
+                
+                .questions-id-detail{
+                    width: 80px;
+                    margin: 5px;
+    
+                }
+            }
+        }
+    }
+}

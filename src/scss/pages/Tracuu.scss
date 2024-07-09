@@ -12,6 +12,7 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+
         .school-filter{
             width: 20%;
             height: 40px;
@@ -40,6 +41,20 @@
             text-align: center;
             border: 2px solid #ddddddff;
         }   
+        @media only screen and (max-width:768px)
+        {
+          display: grid;
+          grid-template-columns: 40% 40%; 
+          height: auto;
+          .school-filter,.grade-filter,.year-filter,.search{
+            width: 100%;
+            margin-top: 10px;
+            margin-bottom: 10px;
+          }
+          .dropdown{
+            display: none;
+          }
+        }
         .dropdown {
             width: 10%;
             float: left;
@@ -109,6 +124,12 @@
             font-weight: normal;
         }
         margin-bottom: 30px;
+        @media only screen and  (max-width:768px){
+          td,th{
+            font-size: 10px;
+            padding: 5px;
+          }
+        }
     }
     
 }

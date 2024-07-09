@@ -12,8 +12,13 @@ import News from './pages/News';
 import NewsList from './pages/NewsList';
 import NewsDetails from './pages/NewsDetails';
 import MyComponent from './json/Mycomponent';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Profile from './pages/Profile';
+import Baucua from './pages/Baucua';
+import Quiz from './pages/Quiz';
+import Leaderboard from './pages/Leaderboard';
+import QuizStart from './pages/QuizStart'
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 
 function App() {
@@ -32,10 +37,18 @@ function App() {
           <Route path='phodiem' element={<Phodiem/>}></Route>
           <Route path='news' element={<News/>}></Route>
           <Route path='newslist' element={<NewsList/>}></Route>
+
           <Route path='documents/:id' element={<NewsDetails/>}></Route>
+          <Route path='baucua' element={<Baucua/>}></Route>
+
+          <Route path='quiz' element={<Quiz/>}></Route>
+          <Route path='kahootquiz' element={<QuizStart/>}></Route>
+
+          <Route path='ranking' element={<Leaderboard/>}></Route>
 
         </Routes>
       <Footer/>
+
     </BrowserRouter>
   );
 }

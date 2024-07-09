@@ -9,6 +9,8 @@ import firebase from 'firebase/app';
 import { getFirestore, collection, addDoc, onSnapshot, getDocs,doc,getDoc, query, where,updateDoc } from 'firebase/firestore';
 import 'firebase/storage'; 
 import 'firebase/database'; // Đối với Realtime Database
+// require('dotenv').config()
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 

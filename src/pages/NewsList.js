@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { firestore, collection, getDocs } from '../firebase';
 import '../scss/pages/NewsList.scss'
+import { Spin } from 'antd';
 const NewsList = () => {
   const [documents, setDocuments] = useState([]);
   console.log(documents)
@@ -22,8 +23,8 @@ const NewsList = () => {
   return (
     <div className='NewsList'>
       {documents.length
-      ? <h1 style={{borderBottom:'1px solid black'}}>Danh sách các báo: </h1>
-      : <h1>Chưa có tin tức nào</h1>
+      ? <h1 style={{textDecoration:'none',color:'Blue',fontSize:'35px'}}>Tin tức tuyển sinh </h1>
+      : <Spin style={{marginTop:'50px'}} size="large" tip="Loading..."></Spin>
        }
       <ul>
         {documents.map((doc) => (

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import '../scss/component/Header.scss';
-import logo from '../images/logo.png';
-import { auth } from '../firebase'; // Import Firebase authentication instance
+import logo from '../images/logo1.png';
+import { auth,doc,firestore,getDoc } from '../firebase'; // Import Firebase authentication instance
+import { getDatabase, ref, onValue } from 'firebase/database';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -10,43 +11,98 @@ const Header = () => {
   const [isMobileView, setIsMobileView] = useState(window.innerWidth < 768);
   const [isLog,setIslog] = useState(localStorage.getItem('isLog'))
   const [user, setUser] = useState();
-
+  const [avatar,setAvatar] = useState();
   const [_user,_setUser] = useState(auth.currentUser); // Lấy thông tin người dùng hiện tại
   const navigate = useNavigate()
+  const [userId, setUserId] = useState('');
+
+  const [userData, setUserData] = useState({});
   console.log(user)
+  console.log(userData)
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobileView(window.innerWidth < 768);
     };
 
     window.addEventListener('resize', handleResize);
-    // setIslog(localStorage.getItem('isLog'))
+
     return () => {
       window.removeEventListener('resize', handleResize);
+
     };
   }, []);
-  useEffect(()=>{
-    setUser(()=>{
-      const displayName = localStorage.getItem('user');
-      const displayNameNew = displayName.replace(/"/g, '');
-      return displayNameNew
-    })
-  },[])
-  // useEffect(()=>{
-  //   if(isLog !== 'true')
-  //   {
-  //     navigate('/login')
-  //   }
-  // },[])
+  // useEffect(() => {
+  //   setUserData(JSON.parse.localStorage.get('userInfor'));
+  // }, [userData]);
+  useEffect(() => {
+    const u = localStorage.getItem('userInfor');
+    if (u) {
+      setUserData(JSON.parse(u));
+    }
+  }, []);
+  useEffect(() => {
+    // Kiểm tra xem localStorage đã có key 'userInfor' chưa
+    const userInfor = localStorage.getItem('userInfor');
+    if (!userInfor) {
+      // Nếu chưa tồn tại, tạo một giá trị mặc định là {}
+      localStorage.setItem('userInfor', JSON.stringify({}));
+    }
+
+    // Tiếp tục xử lý các logic khác
+    // ...
+  }, []);
+  useEffect(() => {
+    // Kiểm tra xem người dùng đã đăng nhập chưa
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        fetchUserData(user.uid);
+        setAvatar(JSON.parse(localStorage.getItem('userInfor'))?.avatar);
+
+        console.log(1)
+      } else {
+      }
+    });
+
+    return () => {
+      unsubscribe(); // Unsubscribe khi unmount component
+    };
+  }, [auth]);
+
+  const fetchUserData = async (userId) => {
+    try {
+      const userRef = doc(firestore, 'users', userId);
+      const docUser = await getDoc(userRef);
+      if (docUser.exists) {
+        const userDataFromFirestore = docUser.data();
+        if (userDataFromFirestore) { // Kiểm tra xem có dữ liệu không
+          localStorage.setItem('userInfor', JSON.stringify(userDataFromFirestore));
+          setUserData(userDataFromFirestore);
+        } else {
+          console.log('Dữ liệu từ Firestore không hợp lệ');
+        }
+      } else {
+        console.log('Không tìm thấy thông tin người dùng');
+      }
+    } catch (error) {
+      console.error('Lỗi khi truy xuất thông tin người dùng:', error);
+    }
+  };
+
   const handleLogout = ()=>{
     localStorage.setItem('isLog',false); 
+    localStorage.setItem('userInfor', JSON.stringify({}));
+
+    // localStorage.removeItem('userInfor');
     setIslog(false);
     navigate('/login')
   }
+
+
   return (
     <div className='Header'>
-      <div style={{ width: '76%', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-        <img className='logo' style={{ width: '110px', height: '100px', marginRight: '40px' }} alt='' src={logo} />
+      <div style={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent:'center',alignItems:'center' }}>
+        <img className='logo' style={{ width: '200px', height: '100px', paddingLeft: '0px' }} alt='' src={logo} />
         <div className={`navbar ${isOpen ? 'open' : ''}`}>
           {isMobileView && (
             <div className="menu-icon" onClick={() => setIsOpen(!isOpen)}>☰</div>
@@ -62,12 +118,17 @@ const Header = () => {
           </div> */}
           <a href="/tracuu">Tra cứu điểm chuẩn</a>
           {/* <a href="/phodiem">Phổ điểm</a> */}
-          <a href="/newslist">Tin tức tuyển sinh</a>
+          <a href="/newslist">Tin tức tổng hợp</a>
+          <a href="/baucua">Game</a>
+          <a href="/quiz">Quiz</a>
+          <a href="/kahootquiz">Kahoot Quiz</a>
+          <a href="/ranking">Ranking</a>
+
           {
             isLog === 'true'
-            ? <div style={{marginLeft:'150px',display:'flex',flexDirection:'row',alignItems:'center'}}>
-                <img style={{width:'50px',height:'50px',backgroundColor:'white',borderRadius:'50%'}} alt='' src={logo}/>
-                <p style={{marginLeft:'10px'}} className='dropdown'>Xin chào: {user}  
+            ? <div className='user'>
+                <img className='avatar' style={{cursor:'pointer'}} onClick={()=>navigate('/settings')} alt='' src={JSON.parse(localStorage.getItem('userInfor')).avatar ||''}/>
+                <p style={{marginLeft:'10px'}} className='dropdown'>Xin chào: {userData.displayName ||''}  
                   <div className="dropdown-content">
                     <a href="/settings">Settings</a>
                     <p onClick={handleLogout}>Logout</p>
@@ -76,9 +137,9 @@ const Header = () => {
 
               </div>
             : 
-            <div>
-              <a href="/register">Đăng ký</a>
-              <a href="/login">Đăng nhập</a>
+            <div style={{display:'flex',flexDirection:`${isMobileView ? 'column':'row'}`}}>
+              <a style={{marginRight:`${isMobileView ? '105px':'0px'}`}} href="/register">Đăng ký</a>
+              <a style={{marginRight:'80px'}} href="/login">Đăng nhập</a>
             </div>
           }
         </div>

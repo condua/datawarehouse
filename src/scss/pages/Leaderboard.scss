@@ -1,0 +1,42 @@
+.Leaderboard{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .highlighted-first {
+        background-color: #8c00ff; // Màu cho hạng 1
+        color: white;
+    }
+    
+    .highlighted-second {
+        background-color: #971cfce0; // Màu cho hạng 2
+        color: white;
+    }
+    
+    .highlighted-third {
+        background-color: #bf70ffd4; // Màu cho hạng 3
+        color: white;
+    }
+    table{
+        margin-bottom: 30px;
+        border: 1px solid black;
+
+    }
+    th{
+        border: 1px solid black;
+        padding: 10px;
+    }
+    td{
+        border: 1px solid black;
+        padding: 10px;
+
+    }
+    th,td{
+        font-size: 25px;
+    }
+    @media only screen and (max-width: 768px){
+       th,td{
+        font-size: 15px;
+       }
+    }
+}

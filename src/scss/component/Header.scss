@@ -1,5 +1,5 @@
 .Header{
-    height: 100px;
+    height: 85px;
     width: 100%;
     background-color: #0795DF;
     position: sticky;
@@ -9,6 +9,21 @@
     justify-content: center;
     align-items: center;
     border-bottom: 4px solid #1b80c4;
+    .user{
+      // style={{marginLeft:'150px',display:'flex',flexDirection:'row',alignItems:'center'}},
+      margin-left: 0px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      .avatar{
+        // style={{width:'50px',height:'50px',backgroundColor:'white',borderRadius:'50%'}}
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: white;
+      }
+    }
+
     .logo{
         width: 200px;
         height: 200px;
@@ -86,11 +101,12 @@
 {
     .Header{
         .navbar{
+            padding-top: 50px;
             flex-direction: column;
             align-items: flex-start;
             .menu-icon {
                 position: fixed ;
-                left: 150px;
+                right: 70px;
                 top: 20px;
                 display: block;
                 // background-color: #333;
@@ -111,14 +127,31 @@
                 top: 0;
                 right: 0;
                 height: 100%;
-                a, .dropdown {
+                a,p, .dropdown {
 
                     margin-left: 30px;
-                    margin-top: 40px;
+                    margin-top: 10px;
                     display: block;
                     
                 }
+                .avatar{
+                  display: block;
+
+                }
             }
+        }
+        .user{
+          // style={{marginLeft:'150px',display:'flex',flexDirection:'row',alignItems:'center'}},
+          margin-left: 30px;
+          margin-top: 30px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          
+          
+        }
+        .avatar{
+          display: none;
         }
     }
 
