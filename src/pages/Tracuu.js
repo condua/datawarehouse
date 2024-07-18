@@ -172,10 +172,10 @@ const Tracuu = () => {
         }
       };
       return(
-        <div>
-          {
-            isLog === 'true'
-            ? 
+        // <div>
+        //   {
+        //     isLog === 'true'
+        //     ? 
             <div>
                   <div className='Tracuu'>
                   <div className='list-menu'>
@@ -193,6 +193,8 @@ const Tracuu = () => {
                               <button onClick={()=>{setSearchYear('2020'); setCurrentPage(1);}}>2020</button>
                               <button onClick={()=>{setSearchYear('2021'); setCurrentPage(1);}}>2021</button>
                               <button onClick={()=>{setSearchYear('2022'); setCurrentPage(1);}}>2022</button>
+                              <button onClick={()=>{setSearchYear('2023'); setCurrentPage(1);}}>2023</button>
+
                           </div>
                       </div>
                       {/* <button className='year-filter'>Năm</button> */}
@@ -248,13 +250,13 @@ const Tracuu = () => {
                   />
               </div>
             </div>
-            : <div>
-              {
-                navigate('/login')
-              }
-            </div>
-          }
-        </div>
+        //     : <div>
+        //       {
+        //         navigate('/login')
+        //       }
+        //     </div>
+        //   }
+        // </div>
       )
     // return (
         // <div className='Tracuu'>
