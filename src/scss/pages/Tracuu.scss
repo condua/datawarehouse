@@ -40,25 +40,35 @@
             border-radius: 30px;
             text-align: center;
             border: 2px solid #ddddddff;
+
         }   
         @media only screen and (max-width:768px)
         {
           display: grid;
           grid-template-columns: 40% 40%; 
           height: auto;
-          .school-filter,.grade-filter,.year-filter,.search{
+          .school-filter,.grade-filter,.year-filter{
             width: 100%;
             margin-top: 10px;
             margin-bottom: 10px;
           }
+          .search{
+            width: 245%;
+            margin-top: 10px;
+            margin-bottom: 20px;
+          }
           .dropdown{
-            display: none;
+            // display: none;
           }
         }
         .dropdown {
             width: 10%;
             float: left;
             overflow: hidden;
+            @media only screen and (max-width: 768px)
+            {
+              width: 100%;
+            }
           }
           .dropbtn{
             width: 100%;
