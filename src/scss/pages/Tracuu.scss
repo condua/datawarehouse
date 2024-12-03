@@ -18,7 +18,7 @@
             height: 40px;
             border-radius: 30px;
             text-align: center;
-            // border: none;
+            border: 1px solid black;
         }
         .grade-filter{
             width: 10%;
@@ -26,13 +26,13 @@
             border-radius: 30px;
             text-align: center;
 
-            // border: none;
+            border: 1px solid black;
         }
         .year-filter{
             width: 15%;
             height: 40px;
             border-radius: 30px;
-            border: none;
+            border: 1px solid black;
         }
         .search{
             width: 20%;
@@ -65,6 +65,8 @@
             width: 10%;
             float: left;
             overflow: hidden;
+            border: 1px solid black;
+            border-radius: 30px;
             @media only screen and (max-width: 768px)
             {
               width: 100%;
