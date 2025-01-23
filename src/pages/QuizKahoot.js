@@ -187,7 +187,7 @@ const QuizKahoot = ({ playerName, playerMssv }) => {
         </div>
       )}
     </div>
-  );
+  );  
 };
 
 export default QuizKahoot;
