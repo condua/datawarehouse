@@ -1,5 +1,5 @@
 .Baucua {
-  height: 90vh;
+  /* height: 90vh; */
   background-image: url("../images/tet.jpg");
   background-color: black;
   color: white;
@@ -38,7 +38,7 @@
   bottom: 15px;
   left: 0;
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   z-index: 2;
 }
 
@@ -60,18 +60,19 @@
 .Baucua .container .btn:hover {
   border: 3px solid black;
 }
-@media only screen and (max-width: 550px) {
+@media only screen and (max-width: 768px) {
   .Baucua .bat {
-    width: 300px;
-    height: 300px;
+    margin-top: 200px;
+    width: 350px;
+    height: 350px;
     /* background-color: antiquewhite; */
   }
   .Baucua .list-items {
     position: absolute;
     width: 50%;
     height: 45px;
-    top: 125px;
-    left: 85px;
+    top: 350px;
+    left: 105px;
     /* background-color: aqua; */
     z-index: 1;
   }
@@ -81,7 +82,7 @@
         border-radius: 10px;
     } */
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
   .Baucua .container {
     width: 80%;
     height: 50px;
@@ -105,7 +106,16 @@
   flex-direction: column;
   gap: 15px;
 }
-
+@media screen and (max-width: 768px) {
+  .sound {
+    width: 100%;
+    right: 0;
+    top: 80px;
+    padding: 10px;
+    color: black;
+    background-color: rgba(255, 113, 113, 0.5);
+  }
+}
 .sound .icon {
   width: 30px;
   height: 30px;

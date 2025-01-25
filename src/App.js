@@ -19,6 +19,7 @@ import Leaderboard from "./pages/Leaderboard";
 import QuizStart from "./pages/QuizStart";
 import Contact from "./pages/Contact";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Room from "./pages/Room";
 
 function App() {
   return (
@@ -45,6 +46,8 @@ function App() {
 
         <Route path="ranking" element={<Leaderboard />}></Route>
         <Route path="contact" element={<Contact />}></Route>
+
+        <Route path="room" element={<Room />}></Route>
       </Routes>
       <Footer />
     </BrowserRouter>

@@ -1,6 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import CustomAlert from "./CustomAlert"; // Import the custom alert component
-
 import "./Baucua.css";
 import bat from "../images/bat.png";
 import dia from "../images/dia.png";
@@ -10,9 +8,9 @@ import tom from "../images/tom.jpg";
 import ca from "../images/ca.jpg";
 import nai from "../images/nai.jpg";
 import ga from "../images/ga.jpg";
-import vndIcon from "../images/vndIcon.png";
+
 import questionMark from "../images/questionMark.png";
-import plusIcon from "../images/plusIcon.png";
+
 import sound from "../sound/baucua.mp3";
 
 import nhacTet from "../sound/nhacTet.mp3";
@@ -116,7 +114,7 @@ const listMusic = [
   },
 ];
 
-function Baucua() {
+function BaucuaOld() {
   const [showBat, setShowBat] = useState(false);
   const [text, setText] = useState("Đậy");
   const [image1, setImage1] = useState(bau);
@@ -128,142 +126,6 @@ function Baucua() {
   const [textMusic, setTextMusic] = useState("Bật nhạc");
   const [icon, setIcon] = useState(iconSound);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [coins, setCoins] = useState(5000000);
-  const [isSpinning, setIsSpinning] = useState(false); // Track spinning status
-  const [hasBet, setHasBet] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
-  const [naptien, setNaptien] = useState(0);
-  const [openNaptien, setOpenNaptien] = useState(false);
-  const listItems = [
-    {
-      id: 1,
-      name: "Bầu",
-      image: bau,
-      bet: 0,
-    },
-    {
-      id: 2,
-      name: "Cua",
-      image: cua,
-      bet: 0,
-    },
-    {
-      id: 3,
-      name: "Tôm",
-      image: tom,
-      bet: 0,
-    },
-    {
-      id: 4,
-      name: "Cá",
-      image: ca,
-      bet: 0,
-    },
-    {
-      id: 5,
-      name: "Gà",
-      image: ga,
-      bet: 0,
-    },
-    {
-      id: 6,
-      name: "Nai",
-      image: nai,
-      bet: 0,
-    },
-  ];
-
-  // State lưu số tiền cược cho mỗi mục
-  const [bets, setBets] = useState(
-    listItems.reduce((acc, item) => {
-      acc[item.id] = 0; // Khởi tạo cược bằng 0 cho mỗi item
-      return acc;
-    }, {})
-  );
-  const handleBetChange = (id, value) => {
-    // Kiểm tra nếu đầu vào là số hợp lệ
-    if (/^\d*$/.test(value)) {
-      // Cập nhật tiền cược cho mục mà không trừ tiền ngay
-      setBets((prevBets) => ({
-        ...prevBets,
-        [id]: value,
-      }));
-    }
-  };
-
-  const handlePlaceBet = () => {
-    if (hasBet === true) {
-      alert("Bạn đã đặt cược rồi");
-      return;
-    }
-    // Tính tổng tiền cược
-    const totalBet = Object.values(bets).reduce(
-      (acc, bet) => acc + parseInt(bet || 0, 10),
-      0
-    );
-
-    // Kiểm tra nếu tổng tiền cược lớn hơn 0 và không vượt quá số tiền có
-    if (totalBet <= 0) {
-      alert("Số tiền cược phải lớn hơn 0!");
-      return;
-    }
-    if (totalBet > coins) {
-      alert("Số tiền cược vượt quá số tiền bạn có!");
-    } else {
-      // Trừ tiền khi đặt cược
-      setCoins((prevAmount) => prevAmount - totalBet);
-      setHasBet(true);
-      alert(`Bạn đã cược tổng cộng: ${formatCurrency(totalBet)} VND`);
-    }
-  };
-  const checkReward = (finalImages) => {
-    const selectedItems = finalImages; // Sử dụng kết quả quay đã lưu
-
-    const imageCounts = selectedItems.reduce((counts, item) => {
-      counts[item] = (counts[item] || 0) + 1;
-      return counts;
-    }, {});
-
-    let totalReward = 0;
-
-    Object.keys(bets).forEach((id) => {
-      const betAmount = bets[id];
-      const selectedImage = listItems[id - 1].image;
-
-      if (betAmount > 0 && imageCounts[selectedImage]) {
-        const rewardMultiplier = imageCounts[selectedImage];
-        totalReward += parseInt(betAmount, 10) * (rewardMultiplier + 1);
-      }
-    });
-
-    if (totalReward > 0) {
-      setCoins((prevCoins) => prevCoins + totalReward);
-      setAlertMessage(
-        `Bạn đã thắng và nhận được ${formatCurrency(totalReward)} VND`
-      );
-      setShowAlert(true);
-    } else {
-      setAlertMessage("Bạn đã không trúng thưởng");
-      setShowAlert(true);
-    }
-
-    setHasBet(false);
-    resetBets();
-  };
-
-  const closeAlert = () => {
-    setShowAlert(false);
-  };
-
-  const resetBets = () => {
-    setBets(
-      listItems.reduce((acc, item) => {
-        acc[item.id] = 0; // Reset each bet
-        return acc;
-      }, {})
-    );
-  };
 
   const audioRef = useRef(new Audio(sound));
   const audioMusic = useRef(new Audio(music));
@@ -310,15 +172,7 @@ function Baucua() {
       setIcon(iconSound);
     }
   };
-  const showNaptien = () => {
-    // Lấy số tiền cược cho mỗi mục
-    setOpenNaptien(true);
-  };
-  const handleNaptien = () => {
-    setCoins(coins + parseInt(naptien, 10));
-    setNaptien(0);
-    setOpenNaptien(false);
-  };
+
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -331,59 +185,36 @@ function Baucua() {
     setImage2(bau);
     setImage3(bau);
   };
-  function formatCurrency(amount) {
-    return new Intl.NumberFormat("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    }).format(amount);
-  }
-  const getRandomImage = () => {
-    if (isSpinning) return; // Prevent new spin if already spinning
 
-    setIsSpinning(true); // Set spinning to true when the spin starts
+  function getRandomImage() {
+    if (spinning) return;
 
+    setSpinning(true);
     const spins = 30;
-    let spinCount = 0;
 
+    let spinCount = 0;
     const interval = setInterval(() => {
       spinCount++;
       const randomIndex = Math.floor(Math.random() * ImageArray.length);
       const randomIndex1 = Math.floor(Math.random() * ImageArray.length);
       const randomIndex2 = Math.floor(Math.random() * ImageArray.length);
 
-      setImage1(`${ImageArray[randomIndex]}`);
-      setImage2(`${ImageArray[randomIndex1]}`);
-      setImage3(`${ImageArray[randomIndex2]}`);
+      const selectedImage = ImageArray[randomIndex];
+      const selectedImage1 = ImageArray[randomIndex1];
+      const selectedImage2 = ImageArray[randomIndex2];
 
-      // If the spin count reaches the desired number, stop spinning
+      setImage1(`${selectedImage}`);
+      setImage2(`${selectedImage1}`);
+      setImage3(`${selectedImage2}`);
+
       if (spinCount >= spins) {
         clearInterval(interval);
-        setIsSpinning(false); // Set spinning to false after the spin finishes
-
-        // Save final results and check for reward
-        const finalImages = [
-          ImageArray[randomIndex],
-          ImageArray[randomIndex1],
-          ImageArray[randomIndex2],
-        ];
-
-        checkReward(finalImages); // Send final results to checkReward
+        setSpinning(false);
       }
-    }, 100); // Update every 100ms
-  };
+    }, 100);
+  }
 
-  const handleSpinButton = () => {
-    if (hasBet === false) {
-      alert("Bạn phải đặt cược số tiền lớn hơn 0!");
-      return;
-    }
-    // Kiểm tra nếu tổng số tiền cược lớn hơn 0 mới được phép xốc
-
-    getRandomImage();
-    audioRef.current.play();
-  };
-
-  const handleOpenButton = () => {
+  const handleDapButton = () => {
     if (text === "Đậy") {
       setText("Mở");
     } else {
@@ -396,24 +227,6 @@ function Baucua() {
     // padding: '20px', // Đặt lề là 20px
     // backgroundColor: '#f0f0f0', // Đặt màu nền
     // // Thêm các thuộc tính CSS khác tùy thuộc vào thiết kế của bạn
-  };
-  // Format number with commas
-  const formatNumber = (value) => {
-    if (!value) return "";
-    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  };
-
-  // Remove formatting (commas) before setting state
-  const unformatNumber = (value) => {
-    return value.replace(/,/g, "");
-  };
-
-  const handleChange = (e) => {
-    const rawValue = e.target.value;
-    const unformatted = unformatNumber(rawValue); // Remove commas
-    if (/^\d*$/.test(unformatted)) {
-      setNaptien(unformatted); // Store unformatted number
-    }
   };
   return (
     <div className={`Baucua${spinning ? " spinning" : ""}`}>
@@ -432,61 +245,43 @@ function Baucua() {
           <img alt="" src={image3} className="item" />
         </div>
       </div>
-      <div className="w-4/5 grid grid-cols-2 md:grid-cols-3  gap-4 mb-8">
-        {listItems.map((item) => (
-          <div
-            key={item.id}
-            className="p-4 border border-gray-200 rounded-lg flex flex-col items-center"
-          >
-            <img src={item.image} alt={item.name} className="w-16 h-16 mb-2" />
-            {/* <p className="text-sm font-medium">{item.name}</p> */}
-            <div className="flex items-center md:flex-row flex-col">
-              <p className="text-sm font-medium">Tiền cược: </p>
-              <input
-                type="number"
-                value={bets[item.id]}
-                onChange={(e) => handleBetChange(item.id, e.target.value)}
-                className="md:w-3/5 w-full ml-2 p-1 border border-gray-300 rounded text-black"
-                min="0"
-              />
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="container mb-10">
+
+      <div className="container">
         <button
           className="btn"
           style={{ backgroundColor: "lightblue" }}
-          onClick={handleSpinButton} // Use the new function to handle the button click
-          disabled={isSpinning} // Disable the button while spinning
+          onClick={() => {
+            getRandomImage();
+            audioRef.current.play();
+          }}
         >
           Xốc
         </button>
-        {/* <button
+        <button
           className="btn"
           style={{ backgroundColor: "#52D3FF" }}
           onClick={handleResetImages}
         >
           Reset
-        </button> */}
+        </button>
         <button
           className="btn"
           style={{ backgroundColor: "#9370db" }}
-          onClick={handleOpenButton}
+          onClick={handleDapButton}
         >
           {text}
         </button>
-        <button
-          className="btn"
-          style={{ backgroundColor: "#FFD700" }}
-          onClick={handlePlaceBet}
-        >
-          Đặt cược
-        </button>
       </div>
+
       <div className="sound">
         <div
-          className="w-2/3 flex flex-row items-center cursor-pointer"
+          style={{
+            width: "150px",
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            cursor: "pointer",
+          }}
           onClick={toggleMusic}
         >
           <img alt="" className="icon" src={icon} />
@@ -496,7 +291,6 @@ function Baucua() {
         </div>
         <select
           style={{ border: "none", borderRadius: "10px", color: "black" }}
-          className="md:w-full w-7/8"
           onChange={handleMusicChange}
           value={music}
         >
@@ -509,7 +303,7 @@ function Baucua() {
         </select>
         <div
           style={{
-            // width: "180px",
+            width: "180px",
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
@@ -530,26 +324,6 @@ function Baucua() {
             Hướng dẫn chơi
           </p>
         </div>
-        <div
-          style={{
-            // width: "180px",
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            cursor: "pointer",
-          }}
-          onClick={showNaptien}
-        >
-          <img style={{ width: "30px", height: "30px" }} alt="" src={vndIcon} />
-          <p className="textP" style={{ marginLeft: "15px" }}>
-            Tiền: {formatCurrency(coins)}
-          </p>
-          <img
-            style={{ width: "15px", height: "15px", marginLeft: "10px" }}
-            alt=""
-            src={plusIcon}
-          />
-        </div>
         <Modal
           width={1000}
           title="Hướng dẫn chơi"
@@ -564,31 +338,13 @@ function Baucua() {
             title="Web Content"
             width="100%"
             height="490"
-            src="https://mybk.website/documents/MAZLUpBtQ9xIJpSRGrnU"
+            src="https://mybk.tech/documents/MAZLUpBtQ9xIJpSRGrnU"
             // frameBorder="0"
           />
         </Modal>
-        <Modal
-          open={openNaptien}
-          centered
-          onOk={handleNaptien}
-          onCancel={() => setOpenNaptien(false)}
-        >
-          <p>Nhập số tiền bạn muốn nạp</p>
-          <input
-            type="text" // Use text to enable custom formatting
-            value={formatNumber(naptien)}
-            onChange={handleChange}
-            style={{ border: "1px solid black" }}
-            className="w-full rounded-md p-2"
-          />
-        </Modal>
-        {showAlert && (
-          <CustomAlert message={alertMessage} onClose={closeAlert} />
-        )}
       </div>
     </div>
   );
 }
 
-export default Baucua;
+export default BaucuaOld;
