@@ -220,7 +220,7 @@ function Baucua() {
       // Trừ tiền khi đặt cược
       setCoins((prevAmount) => prevAmount - totalBet);
       setHasBet(true);
-      alert(`Bạn đã cược tổng cộng: ${formatCurrency(totalBet)} VND`);
+      alert(`Bạn đã cược tổng cộng: ${formatCurrency(totalBet)}`);
     }
   };
   const checkReward = (finalImages) => {
@@ -246,7 +246,7 @@ function Baucua() {
     if (totalReward > 0) {
       setCoins((prevCoins) => prevCoins + totalReward);
       setAlertMessage(
-        `Bạn đã thắng và nhận được ${formatCurrency(totalReward)} VND`
+        `Bạn đã thắng và nhận được ${formatCurrency(totalReward)}`
       );
       setShowAlert(true);
     } else {
@@ -455,6 +455,7 @@ function Baucua() {
                 onChange={(e) => handleBetChange(item.id, e.target.value)}
                 className="md:w-3/5 w-full ml-2 p-1 border border-gray-300 rounded text-black"
                 min="0"
+                disabled={hasBet}
               />
             </div>
           </div>
