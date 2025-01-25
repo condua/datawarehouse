@@ -182,12 +182,18 @@ function Baucua() {
     }, {})
   );
   const handleBetChange = (id, value) => {
-    // Kiểm tra nếu đầu vào là số hợp lệ
-    if (/^\d*$/.test(value)) {
-      // Cập nhật tiền cược cho mục mà không trừ tiền ngay
+    // Helper function to remove commas for raw value
+    const unformatNumber = (val) => val.replace(/,/g, "");
+
+    // Helper function to format numbers with commas
+
+    // Remove formatting and check if the value is a valid number
+    const rawValue = unformatNumber(value);
+    if (/^\d*$/.test(rawValue)) {
+      // Update the bets state with formatted input
       setBets((prevBets) => ({
         ...prevBets,
-        [id]: value,
+        [id]: rawValue, // Store unformatted number in the state
       }));
     }
   };
@@ -443,8 +449,9 @@ function Baucua() {
             <div className="flex items-center md:flex-row flex-col">
               <p className="text-sm font-medium">Tiền cược: </p>
               <input
-                type="number"
-                value={bets[item.id]}
+                type="text"
+                placeholder="0"
+                value={formatNumber(bets[item.id])}
                 onChange={(e) => handleBetChange(item.id, e.target.value)}
                 className="md:w-3/5 w-full ml-2 p-1 border border-gray-300 rounded text-black"
                 min="0"
