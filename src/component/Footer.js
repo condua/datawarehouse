@@ -109,8 +109,8 @@ const Footer = () => {
               <h3 style={{ fontWeight: "bolder", textAlign: "left" }}>
                 LIÊN HỆ
               </h3>
-              <p>📌</p>
-              <p>📞</p>
+              <p>📌 268 Lý Thường Kiệt, Phường 14, Quận 10, Hồ Chí Minh</p>
+              <p>📞 028 3864 7256</p>
               <p>
                 💌 <EmailLink email={emailAddress} />
               </p>
@@ -121,7 +121,7 @@ const Footer = () => {
 
       <div className="footer-bottom">
         <span className="text-xxs md:text-2xl">
-          Copyright © By Phan Hoàng Phúc - 2024
+          Copyright © By Phan Hoàng Phúc - {new Date().getFullYear()}
         </span>
       </div>
     </div>
