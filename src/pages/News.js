@@ -1,19 +1,26 @@
-import React, { useState, useEffect,useMemo,useRef } from 'react';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import '../scss/pages/News.scss';
-import { firestore, collection, addDoc, onSnapshot, storage, ref, uploadBytes } from '../firebase'; // Import storage từ tệp firebase.js
-import { v4 as uuidv4 } from 'uuid';
-import { getDownloadURL } from 'firebase/storage';
-import { format } from 'date-fns';
-
+import React, { useState, useEffect, useMemo, useRef } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import "../scss/pages/News.scss";
+import {
+  firestore,
+  collection,
+  addDoc,
+  onSnapshot,
+  storage,
+  ref,
+  uploadBytes,
+} from "../firebase"; // Import storage từ tệp firebase.js
+import { v4 as uuidv4 } from "uuid";
+import { getDownloadURL } from "firebase/storage";
+import { format } from "date-fns";
 
 const News = () => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
   const [backgroundImage, setBackgroundImage] = useState(null);
   const [documents, setDocuments] = useState([]);
-  const [timeNow, setTimeNow] = useState('')
+  const [timeNow, setTimeNow] = useState("");
 
   const editorRef = useRef();
 
@@ -36,34 +43,37 @@ const News = () => {
       const imageRef = ref(storage, `images/${backgroundImage.name + imageId}`); // Sử dụng cấu trúc bạn đã cung cấp
       await uploadBytes(imageRef, backgroundImage); // Tải hình ảnh lên Firebase Storage
       const imageURL = await getDownloadURL(imageRef); // Lấy URL của hình ảnh
-      const currentDateTime = format(new Date(), 'dd-MM-yyyy HH:mm:ss'); // Lấy ngày giờ hiện tại định dạng
+      const currentDateTime = format(new Date(), "dd-MM-yyyy HH:mm:ss"); // Lấy ngày giờ hiện tại định dạng
 
-      await addDoc(collection(firestore, 'documents'), {
+      await addDoc(collection(firestore, "documents"), {
         title: title,
         content: content,
         background: imageURL, // Lưu URL của hình ảnh nền
-        timestamp: currentDateTime
+        timestamp: currentDateTime,
       });
-      setTitle('');
-      setContent('');
+      setTitle("");
+      setContent("");
       setBackgroundImage(null);
-      alert('Tài liệu đã được lưu thành công!');
+      alert("Tài liệu đã được lưu thành công!");
     } else {
-      alert('Vui lòng nhập cả tiêu đề, nội dung và chọn hình ảnh nền!');
+      alert("Vui lòng nhập cả tiêu đề, nội dung và chọn hình ảnh nền!");
     }
   };
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(firestore, 'documents'), (snapshot) => {
-      const data = [];
-      snapshot.forEach((doc) => {
-        data.push({
-          id: doc.id,
-          ...doc.data()
+    const unsubscribe = onSnapshot(
+      collection(firestore, "documents"),
+      (snapshot) => {
+        const data = [];
+        snapshot.forEach((doc) => {
+          data.push({
+            id: doc.id,
+            ...doc.data(),
+          });
         });
-      });
-      setDocuments(data);
-    });
+        setDocuments(data);
+      }
+    );
 
     return () => {
       unsubscribe();
@@ -77,23 +87,34 @@ const News = () => {
   }, []);
   return (
     <div className="News">
-      <h1>Create a new news</h1>
+      <h1 className="py-2">Tạo một bài mới</h1>
       <div className="input-field">
-        <label>Tiêu đề bài báo:</label>
-        <input type="text" value={title} onChange={handleTitleChange} />
+        <label className="text-xl px-2">Tiêu đề bài báo:</label>
+        <input
+          className="border-solid border-2 border-black p-4"
+          type="text"
+          value={title}
+          onChange={handleTitleChange}
+        />
       </div>
-      <div className="input-field-picture">
-        <label>Chọn hình ảnh nền:</label>
+      <div className="flex flex-row pb-5 items-center">
+        <label className="px-2">Chọn hình ảnh nền:</label>
         <input type="file" onChange={handleBackgroundChange} />
       </div>
       <div className="editor">
         <ReactQuill value={content} onChange={handleEditorChange} />
       </div>
-      <button onClick={handleSave}>Lưu vào Firestore và Firebase Storage</button>
+      <button
+        className="bg-blue-400 p-3 rounded-xl hover:bg-blue-300 text-black"
+        onClick={handleSave}
+      >
+        Lưu vào Firestore và Firebase Storage
+      </button>
 
       <div className="preview">
         <h2>Preview:</h2>
-        <div dangerouslySetInnerHTML={{ __html: content }} /> {/* Dùng để chuyển cấu trúc html */}
+        <div dangerouslySetInnerHTML={{ __html: content }} />{" "}
+        {/* Dùng để chuyển cấu trúc html */}
       </div>
       {/* <div className="saved-documents">
         <h2>Saved Documents:</h2>
